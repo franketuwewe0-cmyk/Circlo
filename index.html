@@ -3,54 +3,42 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Circlo</title>
+    <title>Circlo - Real App</title>
     <style>
-        /* --- THEME VARIABLES --- */
+        /* --- CSS REMAINS THE SAME --- */
         :root {
             --bg-body: #121220; --bg-card: #1e1e2d; --bg-nav: #1a1a2e; --text-main: #ffffff;
             --text-muted: #a0a0b0; --accent: #5D9CEC; --border-color: #2a2a3e;
             --danger: #e74c3c; --success: #2ecc71; --warning: #f1c40f;
         }
-        body.light-mode {
-            --bg-body: #f0f2f5; --bg-card: #ffffff; --bg-nav: #ffffff; --text-main: #333333;
-            --text-muted: #666666; --border-color: #ddd; --danger: #d9534f;
-        }
-
+        body.light-mode { --bg-body: #f0f2f5; --bg-card: #ffffff; --bg-nav: #ffffff; --text-main: #333333; --text-muted: #666666; --border-color: #ddd; --danger: #d9534f; }
         * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; transition: background-color 0.3s, color 0.3s; }
         body { background-color: var(--bg-body); color: var(--text-main); display: flex; justify-content: center; height: 100vh; overflow: hidden; }
-        
         #app-container { width: 100%; max-width: 480px; height: 100vh; background-color: var(--bg-body); position: relative; display: flex; flex-direction: column; }
-
-        /* --- HEADER --- */
+        
         .header { display: flex; justify-content: space-between; align-items: center; padding: 10px 15px; background-color: var(--bg-nav); border-bottom: 1px solid var(--border-color); z-index: 10; gap: 10px; }
         .header-left { display: flex; align-items: center; gap: 5px; flex: 1; }
         .header-title { font-size: 20px; font-weight: bold; color: var(--accent); }
-        .search-container { display: flex; align-items: center; flex: 1; background: var(--bg-card); border-radius: 20px; padding: 0 10px; border: 1px solid var(--border-color); }
-        .search-bar { flex: 1; padding: 8px 5px; background: transparent; border: none; color: var(--text-main); outline: none; font-size: 14px; }
-        .search-filter { background: transparent; border: none; color: var(--accent); font-size: 12px; font-weight: bold; cursor: pointer; outline: none; }
-        .search-filter option { background: var(--bg-card); color: var(--text-main); }
         .header-icons { display: flex; gap: 15px; font-size: 20px; cursor: pointer; }
         .back-btn { background: none; border: none; color: var(--accent); font-size: 26px; cursor: pointer; font-weight: bold; padding: 0 10px; display: none; line-height: 1; }
-
-        /* --- MAIN CONTENT --- */
+        
         #main-view { flex: 1; overflow-y: auto; padding-bottom: 80px; }
         .view-section { display: none; padding: 15px; }
         .view-section.active { display: block; }
 
-        /* --- AUTH SCREENS --- */
+        /* AUTH */
         .auth-container { padding: 30px; display: flex; flex-direction: column; justify-content: center; height: 100vh; }
         .auth-logo { font-size: 40px; font-weight: bold; color: var(--accent); text-align: center; margin-bottom: 5px; }
-        .auth-tagline { font-size: 14px; color: var(--text-muted); text-align: center; margin-bottom: 30px; }
         .auth-tabs { display: flex; margin-bottom: 20px; border-bottom: 1px solid var(--border-color); }
         .auth-tab { flex: 1; padding: 10px; text-align: center; cursor: pointer; font-weight: bold; color: var(--text-muted); border-bottom: 2px solid transparent; margin-bottom: -2px; }
         .auth-tab.active { color: var(--accent); border-bottom: 2px solid var(--accent); }
         .form-group { margin-bottom: 15px; }
         .form-group label { display: block; font-size: 13px; color: var(--text-muted); margin-bottom: 5px; }
-        .form-group input, .form-group select { width: 100%; padding: 12px; background: var(--bg-card); border: 1px solid var(--border-color); border-radius: 8px; color: var(--text-main); font-size: 15px; outline: none; }
+        .form-group input { width: 100%; padding: 12px; background: var(--bg-card); border: 1px solid var(--border-color); border-radius: 8px; color: var(--text-main); font-size: 15px; outline: none; }
         .auth-btn { width: 100%; padding: 15px; background: var(--accent); color: white; border: none; border-radius: 8px; font-size: 16px; font-weight: bold; cursor: pointer; margin-top: 10px; }
         .auth-error { color: var(--danger); font-size: 14px; text-align: center; margin-bottom: 15px; display: none; }
 
-        /* --- BOTTOM NAVIGATION --- */
+        /* NAV */
         .bottom-nav { position: absolute; bottom: 0; width: 100%; height: 70px; background: var(--bg-nav); border-top: 1px solid var(--border-color); display: flex; justify-content: space-around; align-items: center; padding-bottom: 5px; z-index: 100; }
         .nav-item { display: flex; flex-direction: column; align-items: center; justify-content: center; color: var(--text-muted); font-size: 11px; cursor: pointer; flex: 1; height: 100%; gap: 4px; }
         .nav-item.active { color: var(--accent); }
@@ -58,117 +46,49 @@
         .nav-add { position: relative; top: -20px; }
         .nav-add .add-circle { width: 55px; height: 55px; background: var(--accent); border-radius: 50%; display: flex; justify-content: center; align-items: center; font-size: 30px; color: white; font-weight: bold; box-shadow: 0 4px 10px rgba(0,0,0,0.2); border: 4px solid var(--bg-body); }
 
-        /* --- FEED CARDS --- */
+        /* POSTS */
         .post-card { background: var(--bg-card); border-radius: 12px; margin-bottom: 20px; overflow: hidden; box-shadow: 0 2px 8px rgba(0,0,0,0.1); }
         .post-header { display: flex; align-items: center; padding: 12px; gap: 10px; }
         .post-avatar { width: 40px; height: 40px; border-radius: 50%; background: var(--accent); display: flex; justify-content: center; align-items: center; font-weight: bold; color: white; overflow: hidden; }
         .post-user-info { flex: 1; }
         .post-user-info strong { font-size: 15px; display: block; }
-        .verified-badge { color: #1DA1F2; font-size: 14px; margin-left: 3px; }
-        .post-user-info span { font-size: 12px; color: var(--text-muted); }
-        .follow-btn { background: none; border: 1px solid var(--accent); color: var(--accent); padding: 5px 12px; border-radius: 20px; font-size: 12px; font-weight: bold; cursor: pointer; }
-        .post-media-carousel { display: flex; overflow-x: auto; scroll-snap-type: x mandatory; gap: 5px; max-height: 300px; background: #000; }
-        .post-media-item { min-width: 100%; scroll-snap-align: start; display: flex; justify-content: center; align-items: center; }
-        .post-media-item img, .post-media-item video { width: 100%; height: auto; max-height: 300px; object-fit: cover; }
-        .post-media-single { width: 100%; max-height: 300px; background: #000; display: flex; justify-content: center; align-items: center; overflow: hidden; cursor: pointer; }
-        .post-media-single img, .post-media-single video { width: 100%; height: auto; max-height: 300px; object-fit: cover; }
+        .post-media-single { width: 100%; max-height: 300px; background: #000; display: flex; justify-content: center; align-items: center; overflow: hidden; }
+        .post-media-single img { width: 100%; height: auto; max-height: 300px; object-fit: cover; }
         .post-actions { display: flex; gap: 15px; padding: 12px; align-items: center; }
-        .action-btn { background: none; border: none; font-size: 20px; cursor: pointer; color: var(--text-main); display: flex; align-items: center; gap: 5px; }
-        .action-btn.liked { color: #e74c3c; }
-        .action-count { font-size: 14px; font-weight: bold; }
-        .post-info { padding: 0 12px 12px 12px; cursor: pointer; }
+        .action-btn { background: none; border: none; font-size: 20px; cursor: pointer; color: var(--text-main); }
+        .post-info { padding: 0 12px 12px 12px; }
         .post-info h4 { font-size: 15px; margin-bottom: 5px; }
         .post-info p { font-size: 14px; color: var(--text-muted); line-height: 1.4; }
-        .comments-section { padding: 12px; border-top: 1px solid var(--border-color); background: var(--bg-body); }
-        .comment-item { font-size: 13px; margin-bottom: 8px; }
-        .comment-input-area { display: flex; gap: 8px; margin-top: 10px; }
-        .comment-input { flex: 1; padding: 8px 12px; border-radius: 15px; border: 1px solid var(--border-color); background: var(--bg-card); color: var(--text-main); outline: none; font-size: 13px; }
-        .comment-send { background: none; border: none; color: var(--accent); font-weight: bold; cursor: pointer; }
 
-        /* --- POLLS & QUIZZES --- */
-        .poll-container, .quiz-container { padding: 15px; background: var(--bg-body); border-top: 1px solid var(--border-color); }
-        .poll-option { display: flex; flex-direction: column; gap: 5px; margin-bottom: 15px; cursor: pointer; }
-        .poll-option-text { font-size: 14px; font-weight: bold; display: flex; justify-content: space-between; }
-        .poll-bar-bg { width: 100%; height: 10px; background: var(--border-color); border-radius: 5px; overflow: hidden; }
-        .poll-bar-fill { height: 100%; background: var(--accent); width: 0%; transition: width 0.5s ease; }
-        .quiz-option { display: block; width: 100%; padding: 10px; margin-bottom: 8px; background: var(--bg-card); border: 1px solid var(--border-color); border-radius: 8px; color: var(--text-main); text-align: left; cursor: pointer; }
-        .quiz-option.correct { background: var(--success); color: white; }
-        .quiz-option.wrong { background: var(--danger); color: white; }
-
-        /* --- MARKETPLACE & STOREFRONT --- */
-        .product-card { background: var(--bg-card); border-radius: 10px; padding: 15px; margin-bottom: 10px; display: flex; gap: 15px; align-items: center; cursor: pointer; }
-        .product-info { flex: 1; }
-        .product-title { font-weight: bold; font-size: 15px; }
-        .product-price { color: var(--success); font-weight: bold; font-size: 16px; }
-        .product-desc { font-size: 12px; color: var(--text-muted); margin-top: 5px; }
-        .product-rating { font-size: 12px; color: #f1c40f; margin-top: 3px; }
-        .buy-btn { background: var(--accent); color: white; border: none; padding: 8px 12px; border-radius: 8px; font-size: 12px; font-weight: bold; cursor: pointer; }
-
-        /* --- CHAT, GROUPS & DMs --- */
+        /* CHAT */
+        .search-bar { width: 100%; padding: 12px 15px; background: var(--bg-card); border: 1px solid var(--border-color); border-radius: 20px; color: var(--text-main); outline: none; font-size: 14px; margin-bottom: 15px; }
         .list-item { display: flex; align-items: center; gap: 15px; padding: 15px; background: var(--bg-card); border-radius: 10px; margin-bottom: 10px; cursor: pointer; }
-        .list-avatar { width: 45px; height: 45px; border-radius: 50%; background: var(--accent); display: flex; justify-content: center; align-items: center; font-weight: bold; color: white; }
+        .list-avatar { width: 45px; height: 45px; border-radius: 50%; background: var(--accent); display: flex; justify-content: center; align-items: center; font-weight: bold; color: white; text-transform: uppercase; }
         .list-details { flex: 1; }
         .list-title { font-size: 15px; font-weight: bold; }
-        .list-subtitle { font-size: 13px; color: var(--text-muted); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 250px; }
+        .list-subtitle { font-size: 13px; color: var(--text-muted); }
         
-        .chat-container { display: flex; flex-direction: column; height: calc(100vh - 220px); }
-        .chat-tabs { display: flex; background: var(--bg-nav); border-bottom: 1px solid var(--border-color); }
-        .chat-tab { flex: 1; text-align: center; padding: 10px; font-size: 13px; font-weight: bold; color: var(--text-muted); cursor: pointer; }
-        .chat-tab.active { color: var(--accent); border-bottom: 2px solid var(--accent); }
+        .chat-container { display: flex; flex-direction: column; height: calc(100vh - 140px); }
         .chat-list { flex: 1; overflow-y: auto; display: flex; flex-direction: column; gap: 10px; padding: 10px; }
         .message { max-width: 80%; padding: 12px; border-radius: 15px; font-size: 14px; word-wrap: break-word; position: relative; }
         .message.my { background: var(--accent); color: white; align-self: flex-end; border-bottom-right-radius: 2px; }
         .message.other { background: var(--bg-card); color: var(--text-main); align-self: flex-start; border-bottom-left-radius: 2px; }
-        .message img { max-width: 100%; border-radius: 10px; margin-top: 5px; }
         .chat-input-area { display: flex; align-items: center; padding: 10px; background: var(--bg-nav); border-top: 1px solid var(--border-color); gap: 8px; }
         .chat-input { flex: 1; background: var(--bg-card); border: 1px solid var(--border-color); border-radius: 20px; padding: 12px 15px; color: var(--text-main); outline: none; font-size: 14px; }
         .send-btn { background: var(--accent); color: white; border: none; padding: 10px 15px; border-radius: 20px; font-weight: bold; cursor: pointer; }
-        .icon-btn { background: none; border: none; font-size: 20px; color: var(--accent); cursor: pointer; padding: 5px; }
 
-        /* Q&A Styles */
-        .qna-item { background: var(--bg-card); border-radius: 10px; padding: 15px; margin-bottom: 10px; }
-        .qna-question { font-weight: bold; font-size: 14px; margin-bottom: 10px; }
-        .qna-answer { font-size: 13px; color: var(--text-muted); border-left: 2px solid var(--accent); padding-left: 10px; margin-top: 5px; }
-        .upvote-btn { background: var(--bg-body); border: 1px solid var(--border-color); padding: 4px 10px; border-radius: 15px; font-size: 12px; cursor: pointer; color: var(--text-main); }
-        .upvote-btn.upvoted { background: var(--accent); color: white; border-color: var(--accent); }
-
-        /* File Upload Styles */
-        .file-item { background: var(--bg-card); border-radius: 8px; padding: 10px; margin-bottom: 8px; display: flex; align-items: center; gap: 10px; }
-        .file-icon { font-size: 24px; }
-        .file-info { flex: 1; }
-        .file-name { font-size: 14px; font-weight: bold; word-break: break-all; }
-        .download-btn { background: var(--success); color: white; border: none; padding: 5px 10px; border-radius: 5px; font-size: 11px; cursor: pointer; text-decoration: none; }
-
-        /* --- PROFILE & SETTINGS --- */
+        /* PROFILE */
         .profile-card { background: var(--bg-card); border-radius: 15px; padding: 20px; text-align: center; margin-bottom: 15px; }
         .profile-avatar { width: 100px; height: 100px; border-radius: 50%; border: 3px solid var(--accent); object-fit: cover; }
         .profile-name { font-size: 20px; font-weight: bold; }
-        .profile-details { font-size: 13px; color: var(--text-muted); margin-top: 15px; text-align: left; background: var(--bg-body); padding: 10px; border-radius: 8px; }
-        .stats-row { display: flex; justify-content: space-around; margin-top: 15px; padding-top: 15px; border-top: 1px solid var(--border-color); }
-        .stat-number { font-weight: bold; color: var(--accent); font-size: 16px; }
-        .stat-label { font-size: 11px; color: var(--text-muted); }
+        .profile-bio { color: var(--text-muted); font-size: 14px; margin-top: 5px; }
         
-        .profile-tabs { display: flex; border-bottom: 1px solid var(--border-color); margin-bottom: 15px; }
-        .profile-tab { flex: 1; text-align: center; padding: 12px; font-weight: bold; color: var(--text-muted); cursor: pointer; font-size: 14px; }
-        .profile-tab.active { color: var(--accent); border-bottom: 2px solid var(--accent); }
-
-        .settings-group { background: var(--bg-card); border-radius: 12px; padding: 15px; margin-bottom: 15px; display: flex; justify-content: space-between; align-items: center; }
-        .settings-title { font-size: 16px; font-weight: bold; margin-bottom: 10px; color: var(--accent); }
-        .switch { position: relative; display: inline-block; width: 50px; height: 26px; }
-        .switch input { opacity: 0; width: 0; height: 0; }
-        .slider { position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0; background-color: #ccc; transition: .4s; border-radius: 34px; }
-        .slider:before { position: absolute; content: ""; height: 20px; width: 20px; left: 3px; bottom: 3px; background-color: white; transition: .4s; border-radius: 50%; }
-        input:checked + .slider { background-color: var(--accent); }
-        input:checked + .slider:before { transform: translateX(24px); }
-        .color-picker { display: flex; gap: 10px; margin-top: 5px; }
-        .color-dot { width: 30px; height: 30px; border-radius: 50%; cursor: pointer; border: 2px solid transparent; }
-        .color-dot.selected { border-color: #fff; transform: scale(1.1); }
-
+        /* MODAL */
         .modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); z-index: 200; display: none; justify-content: center; align-items: center; }
         .modal-overlay.open { display: flex; }
         .modal-content { background: var(--bg-card); width: 90%; max-width: 400px; padding: 25px; border-radius: 15px; text-align: center; max-height: 80vh; overflow-y: auto; }
         .modal-content h3 { margin-bottom: 20px; color: var(--accent); }
-        .modal-content input, .modal-content textarea, .modal-content select { width: 100%; padding: 12px; margin-bottom: 15px; background: var(--bg-body); border: 1px solid var(--border-color); border-radius: 8px; color: var(--text-main); outline: none; }
+        .modal-content input, .modal-content textarea { width: 100%; padding: 12px; margin-bottom: 15px; background: var(--bg-body); border: 1px solid var(--border-color); border-radius: 8px; color: var(--text-main); outline: none; }
         .modal-btns { display: flex; gap: 10px; }
         .modal-btns button { flex: 1; padding: 12px; border-radius: 8px; border: none; font-weight: bold; cursor: pointer; }
         .btn-cancel { background: #444; color: white; }
@@ -177,162 +97,140 @@
     </style>
 </head>
 <body>
-    <div id="app-container"></div>
+    <div id="app-container">
+        <div style="display:flex; justify-content:center; align-items:center; height:100vh; font-size:20px; color:var(--accent);">Loading Circlo...</div>
+    </div>
+
+    <!-- FIREBASE SDKs -->
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-storage-compat.js"></script>
 
     <script>
         // ==========================================
-        // 🗄️ SIMULATED DATABASE
+        // YOUR FIREBASE CONFIGURATION
         // ==========================================
-        const DB = {
-            getUsers: () => JSON.parse(localStorage.getItem('circlo_users_table')) || {},
-            saveUsers: (users) => localStorage.setItem('circlo_users_table', JSON.stringify(users)),
-            
-            getPosts: () => JSON.parse(localStorage.getItem('circlo_posts_table')) || [
-                { id: 1, username: 'EcoWarrior', userAvatar: 'https://via.placeholder.com/40', isVerified: true, title: 'Saving the planet 🌱', desc: 'Check out this cool eco-friendly tip! #green', media: ['https://images.unsplash.com/photo-1542601906990-b4d3fb778b09?w=500&q=80'], mediaTypes: ['image'], mediaType: 'media-array', category: 'general', postType: 'standard', likes: 12, likedByMe: false, favoritedByMe: false, following: false, comments: [{ user: 'CampusVibes', text: 'Love this!' }] }
-            ],
-            savePosts: (posts) => localStorage.setItem('circlo_posts_table', JSON.stringify(posts)),
-            
-            getGroups: () => {
-                try {
-                    let groups = JSON.parse(localStorage.getItem('circlo_groups_table'));
-                    if (!groups || !Array.isArray(groups) || groups.length === 0 || !groups[0].admins) throw new Error("Invalid");
-                    return groups;
-                } catch (e) {
-                    const defaultGroups = [
-                        { id: 1, name: '💼 Business Hub', type: 'business', owner: 'System', description: 'Buy and sell goods here.', admins: ['System'], members: ['System', 'EcoWarrior'], messages: [], files: [], qna: [] },
-                        { id: 2, name: '🎓 Student Lounge', type: 'student', owner: 'System', description: 'Discuss school life.', admins: ['System'], members: ['System', 'EcoWarrior'], messages: [], files: [], qna: [{ id: 1, question: 'What is the difference between mitosis and meiosis?', user: 'CampusVibes', answers: [], upvotes: [] }] }
-                    ];
-                    localStorage.setItem('circlo_groups_table', JSON.stringify(defaultGroups));
-                    return defaultGroups;
-                }
-            },
-            saveGroups: (groups) => localStorage.setItem('circlo_groups_table', JSON.stringify(groups)),
-            
-            // NEW: DM DATABASE
-            getDMs: () => JSON.parse(localStorage.getItem('circlo_dms_table')) || {},
-            saveDMs: (dms) => localStorage.setItem('circlo_dms_table', JSON.stringify(dms)),
-            
-            getProducts: () => JSON.parse(localStorage.getItem('circlo_products_table')) || [
-                { id: 1, seller: 'EcoWarrior', title: 'Organic Plant Seeds', price: '$5.00', desc: 'Fresh seeds.', category: 'Other', rating: 4.5 },
-                { id: 2, seller: 'CampusVibes', title: 'Biology 101 Textbook', price: '$25.00', desc: 'Gently used.', category: 'Books', rating: 4.0 }
-            ],
-            saveProducts: (products) => localStorage.setItem('circlo_products_table', JSON.stringify(products)),
-
-            getSession: () => JSON.parse(localStorage.getItem('circlo_session')) || null,
-            saveSession: (user) => localStorage.setItem('circlo_session', JSON.stringify(user)),
-            clearSession: () => localStorage.removeItem('circlo_session')
+        const firebaseConfig = {
+            apiKey: "AIzaSyA3cPGmofnbLqIGO8DVoVrQbDEHEyu6pH4",
+            authDomain: "circlo-app-d46d4.firebaseapp.com",
+            projectId: "circlo-app-d46d4",
+            storageBucket: "circlo-app-d46d4.firebasestorage.app",
+            messagingSenderId: "279175597181",
+            appId: "1:279175597181:web:31a400d6c6f8fb8c96b514"
         };
 
-        // --- 1. GLOBAL STATE ---
-        let currentUser = DB.getSession();
+        // Initialize Firebase
+        firebase.initializeApp(firebaseConfig);
+        const auth = firebase.auth();
+        const db = firebase.firestore();
+        const storage = firebase.storage();
+
+        let currentUser = null; 
         let isLoginMode = true;
         let currentTab = 'home';
-        let currentProfileTab = 'my-posts';
-        let currentDMUser = null; // The username of the person we are DMing
-        let currentGroup = null;    
-        let currentGroupTab = 'chat'; // chat, files, qna
-        let viewingStorefront = null;
-        let isLightMode = JSON.parse(localStorage.getItem('circlo_theme')) || false;
-        let historyStack = []; 
-        let postFeed = DB.getPosts();
-        let searchQuery = ''; 
+        let currentDMUser = null; 
+        let historyStack = [];
+        let unsubscribeMessages = null; 
+        let unsubscribeFeed = null;
+        let unsubscribeUsers = null; // NEW: Listener for the user list
+        let allUsersList = []; // NEW: Store users for searching
 
-        if (isLightMode) document.body.classList.add('light-mode');
-
-        if (currentUser) {
-            const today = new Date().toDateString();
-            if (currentUser.lastLogin !== today) {
-                currentUser.streak = (currentUser.lastLogin === new Date(Date.now() - 86400000).toDateString()) ? (currentUser.streak || 0) + 1 : 1;
-                currentUser.lastLogin = today;
-                DB.saveSession(currentUser);
-                const users = DB.getUsers(); users[currentUser.username] = currentUser; DB.saveUsers(users);
+        // Authentication State Listener
+        auth.onAuthStateChanged(async (user) => {
+            if (user) {
+                const userDoc = await db.collection('users').doc(user.uid).get();
+                if (userDoc.exists) {
+                    currentUser = { uid: user.uid, ...userDoc.data() };
+                    renderMainApp();
+                } else {
+                    currentUser = { uid: user.uid, username: user.email.split('@')[0], fullname: "New User", avatar: 'https://via.placeholder.com/150' };
+                    renderMainApp();
+                }
+            } else {
+                currentUser = null;
+                renderAuth();
             }
-        }
+        });
 
-        postFeed.forEach(p => { if (p.isVerified === undefined) p.isVerified = false; });
-        DB.savePosts(postFeed);
-
-        function getUniquePosts(posts) { return Array.from(new Map(posts.map(p => [p.id, p])).values()); }
-
-        // --- 2. CORE RENDERING ---
         const root = document.getElementById('app-container');
-        function render() { if (!currentUser) { renderAuth(); } else { renderMainApp(); } }
 
-        // --- 3. AUTHENTICATION ---
+        // --- AUTHENTICATION ---
         function renderAuth() {
             root.innerHTML = `
                 <div class="auth-container">
                     <div class="auth-logo">Circlo</div>
-                    <div class="auth-tagline">Connect. Share. Grow.</div>
                     <div class="auth-tabs">
                         <div class="auth-tab ${isLoginMode ? 'active' : ''}" onclick="toggleAuthMode(true)">Log In</div>
                         <div class="auth-tab ${!isLoginMode ? 'active' : ''}" onclick="toggleAuthMode(false)">Sign Up</div>
                     </div>
                     <div id="auth-error" class="auth-error"></div>
-                    <form id="auth-form" onsubmit="handleAuth(event)">
+                    <form onsubmit="handleAuth(event)">
                         ${!isLoginMode ? `<div class="form-group"><label>Full Name</label><input type="text" id="fullname" placeholder="e.g. John Doe" required></div>` : ''}
                         <div class="form-group"><label>Username</label><input type="text" id="username" placeholder="e.g. EcoWarrior" required></div>
-                        ${!isLoginMode ? `<div class="form-group"><label>Email</label><input type="email" id="email" required></div><div class="form-group"><label>Address</label><input type="text" id="address" required></div>` : ''}
-                        <div class="form-group"><label>Password</label><input type="password" id="password" required></div>
-                        ${!isLoginMode ? `<div class="form-group"><label>Confirm Password</label><input type="password" id="confirm-password" required></div>` : ''}
-                        <button type="submit" class="auth-btn">${isLoginMode ? 'Log In' : 'Create Account'}</button>
+                        <div class="form-group"><label>Email</label><input type="email" id="email" placeholder="e.g. user@gmail.com" required></div>
+                        <div class="form-group"><label>Password</label><input type="password" id="password" placeholder="Min 6 chars" required></div>
+                        ${!isLoginMode ? `<div class="form-group"><label>Confirm Password</label><input type="password" id="confirm-password" placeholder="Confirm password" required></div>` : ''}
+                        <button type="submit" class="auth-btn" id="auth-btn">${isLoginMode ? 'Log In' : 'Create Account'}</button>
                     </form>
                 </div>`;
         }
-        function toggleAuthMode(loginMode) { isLoginMode = loginMode; document.getElementById('auth-error').style.display = 'none'; renderAuth(); }
-        function handleAuth(event) {
+
+        function toggleAuthMode(loginMode) { isLoginMode = loginMode; renderAuth(); }
+
+        async function handleAuth(event) {
             event.preventDefault();
             const errorDiv = document.getElementById('auth-error'); errorDiv.style.display = 'none';
-            const username = document.getElementById('username').value.trim(); const password = document.getElementById('password').value;
-            if (password.length < 6) { errorDiv.innerText = "Password must be at least 6 characters."; errorDiv.style.display = 'block'; return; }
-            const users = DB.getUsers();
-            if (isLoginMode) {
-                const storedUser = users[username];
-                if (storedUser && storedUser.password === password) { currentUser = storedUser; DB.saveSession(currentUser); render(); }
-                else { errorDiv.innerText = "Invalid username or password."; errorDiv.style.display = 'block'; }
-            } else {
-                if (password !== document.getElementById('confirm-password').value) { errorDiv.innerText = "Passwords do not match."; errorDiv.style.display = 'block'; return; }
-                if (users[username]) { errorDiv.innerText = "Username already exists."; errorDiv.style.display = 'block'; return; }
-                const newUser = { username, fullname: document.getElementById('fullname').value, email: document.getElementById('email').value, address: document.getElementById('address').value, password, bio: "🌱 New to Circlo!", avatar: 'https://via.placeholder.com/150', followers: 0, following: 0, isPrivate: false, isVerified: false, theme: '#5D9CEC', streak: 1, lastLogin: new Date().toDateString(), verificationStatus: 'None' };
-                users[username] = newUser; DB.saveUsers(users); currentUser = newUser; DB.saveSession(currentUser); render();
+            const btn = document.getElementById('auth-btn'); btn.disabled = true; btn.innerText = 'Please wait...';
+            const email = document.getElementById('email').value.trim();
+            const password = document.getElementById('password').value;
+            const username = document.getElementById('username').value.trim();
+
+            try {
+                if (isLoginMode) {
+                    await auth.signInWithEmailAndPassword(email, password);
+                } else {
+                    if (password !== document.getElementById('confirm-password').value) throw new Error("Passwords do not match.");
+                    if (password.length < 6) throw new Error("Password must be at least 6 characters.");
+                    
+                    const usernameCheck = await db.collection('users').where('username', '==', username).get();
+                    if (!usernameCheck.empty) throw new Error("Username is already taken.");
+
+                    const userCredential = await auth.createUserWithEmailAndPassword(email, password);
+                    
+                    await db.collection('users').doc(userCredential.user.uid).set({
+                        username: username,
+                        fullname: document.getElementById('fullname').value.trim(),
+                        email: email,
+                        avatar: 'https://via.placeholder.com/150',
+                        bio: "🌱 New to Circlo!"
+                    });
+                }
+            } catch (error) {
+                errorDiv.innerText = error.message; errorDiv.style.display = 'block';
+                btn.disabled = false; btn.innerText = isLoginMode ? 'Log In' : 'Create Account';
             }
         }
 
-        // --- 4. MAIN APP LAYOUT ---
+        // --- MAIN LAYOUT ---
         function renderMainApp() {
-            document.documentElement.style.setProperty('--accent', currentUser.theme || '#5D9CEC');
             root.innerHTML = `
                 <div class="header">
                     <div class="header-left">
                         <button class="back-btn" id="global-back-btn" onclick="goBack()">←</button>
                         <div class="header-title" id="header-title-text">Circlo</div>
-                        <div class="search-container" id="search-container">
-                            <input type="text" class="search-bar" id="global-search" placeholder="Search..." oninput="handleSearch(this.value)">
-                            <select class="search-filter" onchange="handleFilter(this.value)">
-                                <option value="all">All</option><option value="users">Users</option><option value="posts">Posts</option><option value="shop">Shop</option>
-                            </select>
-                        </div>
                     </div>
-                    <div class="header-icons"><span onclick="switchTab('notifs')">🔔</span><span onclick="switchTab('settings')">⚙️</span></div>
+                    <div class="header-icons"><span onclick="logout()" title="Log Out">🚪</span></div>
                 </div>
                 <div id="main-view">
                     <div id="view-home" class="view-section active"></div>
-                    <div id="view-fun" class="view-section"></div> 
                     <div id="view-chat" class="view-section"></div>
-                    <div id="view-marketplace" class="view-section"></div>
-                    <div id="view-storefront" class="view-section"></div>
-                    <div id="view-notifs" class="view-section"></div>
                     <div id="view-profile" class="view-section"></div>
-                    <div id="view-settings" class="view-section"></div>
-                    <div id="view-profile-settings" class="view-section"></div>
-                    <div id="view-post" class="view-section"></div>
                 </div>
                 <nav class="bottom-nav">
                     <div class="nav-item active" onclick="switchTab('home')" id="nav-home"><span class="nav-icon">🏠</span><span>Home</span></div>
-                    <div class="nav-item" onclick="switchTab('fun')" id="nav-fun"><span class="nav-icon">🎈</span><span>Fun</span></div>
                     <div class="nav-item nav-add" onclick="openAddModal()"><div class="add-circle">+</div></div>
                     <div class="nav-item" onclick="switchTab('chat')" id="nav-chat"><span class="nav-icon">💬</span><span>Chat</span></div>
-                    <div class="nav-item" onclick="switchTab('marketplace')" id="nav-marketplace"><span class="nav-icon">🛒</span><span>Shop</span></div>
                     <div class="nav-item" onclick="switchTab('profile')" id="nav-profile"><span class="nav-icon">👤</span><span>Profile</span></div>
                 </nav>`;
             switchTab('home'); 
@@ -340,312 +238,246 @@
 
         function switchTab(tab, addToHistory = true) {
             if (currentTab === tab && tab !== 'chat') return; 
-            if (addToHistory) {
-                if (['home', 'fun', 'chat', 'marketplace', 'profile', 'notifs'].includes(tab)) historyStack = [];
-                else historyStack.push(currentTab);
-            }
-            currentTab = tab; viewingStorefront = null;
-            const titles = { 'home': 'Circlo', 'fun': 'Fun Zone', 'chat': 'Messages', 'marketplace': 'Marketplace', 'storefront': 'Storefront', 'notifs': 'Notifications', 'profile': 'My Profile', 'settings': 'App Settings', 'profile-settings': 'Profile Settings', 'post': 'Post Details' };
+            if (addToHistory) { if (['home', 'chat', 'profile'].includes(tab)) historyStack = []; else historyStack.push(currentTab); }
+            currentTab = tab; 
+            
+            // Clean up listeners when switching tabs
+            if (tab !== 'chat' && unsubscribeMessages) { unsubscribeMessages(); unsubscribeMessages = null; }
+            if (tab !== 'chat' && unsubscribeUsers) { unsubscribeUsers(); unsubscribeUsers = null; }
+            if (tab !== 'home' && unsubscribeFeed) { unsubscribeFeed(); unsubscribeFeed = null; }
+
+            const titles = { 'home': 'Circlo', 'chat': 'Messages', 'profile': 'My Profile' };
             document.getElementById('header-title-text').innerText = titles[tab] || 'Circlo';
-            document.getElementById('search-container').style.display = (tab === 'home' || tab === 'fun' || tab === 'marketplace') ? 'flex' : 'none';
-            const backBtn = document.getElementById('global-back-btn');
-            backBtn.style.display = (historyStack.length > 0 && tab !== 'home' && tab !== 'fun') ? 'block' : 'none';
+            document.getElementById('global-back-btn').style.display = (historyStack.length > 0 && tab !== 'home') ? 'block' : 'none';
+            
             document.querySelectorAll('.nav-item').forEach(el => el.classList.remove('active'));
             if(document.getElementById('nav-' + tab)) document.getElementById('nav-' + tab).classList.add('active');
             document.querySelectorAll('.view-section').forEach(el => el.classList.remove('active'));
             if(document.getElementById('view-' + tab)) document.getElementById('view-' + tab).classList.add('active');
             
             if (tab === 'home') renderHomeView();
-            if (tab === 'fun') renderFunView();
-            if (tab === 'chat') { currentGroup = null; currentDMUser = null; renderChatView(); }
-            if (tab === 'marketplace') renderMarketplaceView(); 
-            if (tab === 'notifs') renderNotifsView();
+            if (tab === 'chat') { currentDMUser = null; renderChatView(); }
             if (tab === 'profile') renderProfileView();
-            if (tab === 'settings') renderSettingsView();
-            if (tab === 'profile-settings') renderProfileSettingsView();
         }
 
         function goBack() {
-            if (currentGroup) { currentGroup = null; renderChatView(); return; }
             if (currentDMUser) { currentDMUser = null; renderChatView(); return; }
-            if (viewingStorefront) { viewingStorefront = null; switchTab('marketplace'); return; }
             if (historyStack.length > 0) { switchTab(historyStack.pop(), false); }
         }
 
-        // --- 5. SEARCH & FEEDS ---
-        function handleSearch(query) { searchQuery = query.toLowerCase(); refreshCurrentView(); }
-        function handleFilter(filter) { searchFilter = filter; refreshCurrentView(); }
-        function refreshCurrentView() { if (currentTab === 'home') renderHomeView(); if (currentTab === 'fun') renderFunView(); if (currentTab === 'marketplace') renderMarketplaceView(); }
+        function logout() { auth.signOut(); }
 
+        // --- REAL-TIME FEED ---
         function renderHomeView() {
-            let html = ''; let uniqueFeed = getUniquePosts(postFeed).filter(p => p.category === 'general');
-            if (searchQuery) uniqueFeed = uniqueFeed.filter(p => p.title.toLowerCase().includes(searchQuery) || p.desc.toLowerCase().includes(searchQuery));
-            if (uniqueFeed.length === 0) html = `<div style="text-align:center; padding:20px; color:var(--text-muted);">No posts found.</div>`;
-            uniqueFeed.forEach(post => { html += generatePostCardHTML(post); });
-            document.getElementById('view-home').innerHTML = html;
-        }
-
-        function renderFunView() {
-            let html = ''; let funFeed = getUniquePosts(postFeed).filter(p => p.category === 'fun');
-            if (searchQuery) funFeed = funFeed.filter(p => p.title.toLowerCase().includes(searchQuery) || p.desc.toLowerCase().includes(searchQuery));
-            if (funFeed.length === 0) html = `<div style="text-align:center; color:var(--text-muted); padding:20px;">No fun posts found.</div>`;
-            else funFeed.forEach(post => { html += generatePostCardHTML(post); });
-            document.getElementById('view-fun').innerHTML = html;
-        }
-
-        // --- 6. MARKETPLACE & STOREFRONT ---
-        function renderMarketplaceView() {
-            let products = DB.getProducts();
-            if (searchQuery) products = products.filter(p => p.title.toLowerCase().includes(searchQuery) || p.desc.toLowerCase().includes(searchQuery));
-            let html = `<div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:15px;"><h3>🛒 Marketplace</h3><button onclick="openAddProductModal()" style="background:var(--accent); color:white; border:none; padding:6px 12px; border-radius:15px; font-size:12px; font-weight:bold; cursor:pointer;">+ Sell Item</button></div>`;
-            if (!products || products.length === 0) html += `<div style="text-align:center; color:var(--text-muted); padding:20px;">No items found.</div>`; 
-            else products.forEach(p => { html += `<div class="product-card" onclick="viewProduct(${p.id})"><div class="list-avatar" style="background:#f39c12;">🛍️</div><div class="product-info"><div class="product-title">${p.title}</div><div class="product-price">${p.price}</div><div class="product-desc">${p.desc}</div><div class="product-rating">${'⭐'.repeat(Math.floor(p.rating || 4))}${p.rating % 1 !== 0 ? '☆' : ''} (${p.rating || 4.0}) • <span style="color:var(--accent); font-weight:bold;" onclick="event.stopPropagation(); openStorefront('${p.seller}')">@${p.seller}</span></div></div><button class="buy-btn" onclick="event.stopPropagation(); contactSeller('${p.seller}')">Contact</button></div>`; });
-            document.getElementById('view-marketplace').innerHTML = html;
-        }
-
-        function openStorefront(sellerUsername) {
-            viewingStorefront = sellerUsername; historyStack.push(currentTab); currentTab = 'storefront';
-            const users = DB.getUsers(); const seller = users[sellerUsername] || { username: sellerUsername, fullname: sellerUsername, avatar: 'https://via.placeholder.com/150', bio: 'Seller on Circlo', rating: 4.5 };
-            const sellerProducts = DB.getProducts().filter(p => p.seller === sellerUsername);
-            document.getElementById('header-title-text').innerText = `@${sellerUsername}'s Store`; document.getElementById('search-container').style.display = 'none'; document.getElementById('global-back-btn').style.display = 'block';
-            document.querySelectorAll('.nav-item').forEach(el => el.classList.remove('active')); document.querySelectorAll('.view-section').forEach(el => el.classList.remove('active')); document.getElementById('view-storefront').classList.add('active');
-            let productsHtml = ''; if (sellerProducts.length === 0) productsHtml = `<div style="text-align:center; padding:20px; color:var(--text-muted);">No items for sale yet.</div>`; else sellerProducts.forEach(p => { productsHtml += `<div class="product-card" onclick="viewProduct(${p.id})"><div class="list-avatar" style="background:#f39c12;">🛍️</div><div class="product-info"><div class="product-title">${p.title}</div><div class="product-price">${p.price}</div><div class="product-desc">${p.category || 'General'}</div></div><button class="buy-btn" onclick="event.stopPropagation(); contactSeller('${p.seller}')">Contact</button></div>`; });
-            document.getElementById('view-storefront').innerHTML = `<div class="profile-card" style="margin-bottom:15px;"><img src="${seller.avatar}" class="profile-avatar" style="width:80px;height:80px;"><div class="profile-name" style="font-size:18px;">${seller.fullname}</div><div class="profile-bio">@${seller.username} • ${seller.bio}</div><div style="margin-top:10px; color:#f1c40f; font-weight:bold;">Store Rating: ⭐ 4.8 (24 reviews)</div></div><h3 style="margin-bottom:10px;">Items for Sale (${sellerProducts.length})</h3>${productsHtml}`;
-        }
-
-        function viewProduct(productId) { const p = DB.getProducts().find(item => item.id === productId); if (!p) return; const modal = document.createElement('div'); modal.className = 'modal-overlay open'; modal.id = 'view-product-modal'; modal.innerHTML = `<div class="modal-content"><h3>Product Details</h3><div style="text-align:left; background:var(--bg-body); padding:15px; border-radius:8px; margin-bottom:15px;"><div style="font-size:18px; font-weight:bold;">${p.title}</div><div style="color:var(--success); font-size:20px; font-weight:bold; margin:5px 0;">${p.price}</div><div style="font-size:14px; color:var(--text-muted); margin-bottom:10px;">${p.desc}</div><div style="font-size:13px; color:var(--accent); font-weight:bold; cursor:pointer;" onclick="document.getElementById('view-product-modal').remove(); openStorefront('${p.seller}')">Seller: @${p.seller} (Visit Store)</div><div style="font-size:13px; color:#f1c40f; margin-top:5px;">Category: ${p.category || 'General'}</div></div><div class="modal-btns"><button class="btn-cancel" onclick="document.getElementById('view-product-modal').remove()">Close</button><button class="btn-post" onclick="contactSeller('${p.seller}')">Contact Seller</button></div></div>`; document.body.appendChild(modal); }
-        function openAddProductModal() { const modal = document.createElement('div'); modal.className = 'modal-overlay open'; modal.id = 'add-product-modal'; modal.innerHTML = `<div class="modal-content"><h3>Sell an Item</h3><input type="text" id="prod-title" placeholder="Item Name" required><input type="text" id="prod-price" placeholder="Price (e.g. $10.00)" required><select id="prod-category"><option value="Electronics">Electronics</option><option value="Books">Books</option><option value="Fashion">Fashion</option><option value="Food">Food</option><option value="Other">Other</option></select><textarea id="prod-desc" placeholder="Description"></textarea><div class="modal-btns"><button class="btn-cancel" onclick="document.getElementById('add-product-modal').remove()">Cancel</button><button class="btn-post" onclick="submitProduct()">List Item</button></div></div>`; document.body.appendChild(modal); }
-        function submitProduct() { const title = document.getElementById('prod-title').value; const price = document.getElementById('prod-price').value; const desc = document.getElementById('prod-desc').value; const category = document.getElementById('prod-category').value; if (!title || !price) { alert("Please fill in title and price."); return; } const products = DB.getProducts(); products.unshift({ id: Date.now(), seller: currentUser.username, title, price, desc, category, rating: 4.0 }); DB.saveProducts(products); document.getElementById('add-product-modal').remove(); renderMarketplaceView(); }
-        function contactSeller(seller) { alert(`Opening chat with @${seller}... (Feature coming soon!)`); }
-
-        // --- 7. GENERATE POST CARD ---
-        function generatePostCardHTML(post, isDetailView = false) {
-            let mediaHtml = '';
-            if (post.mediaType === 'media-array' && post.media && post.media.length > 0) {
-                if (post.media.length === 1) { mediaHtml = `<div class="post-media-single" onclick="viewPost(${post.id})">${post.mediaTypes[0] === 'video' ? `<video src="${post.media[0]}" controls></video>` : `<img src="${post.media[0]}">`}</div>`; } 
-                else { mediaHtml = `<div class="post-media-carousel">${post.media.map((src, idx) => `<div class="post-media-item">${post.mediaTypes[idx] === 'video' ? `<video src="${src}" controls></video>` : `<img src="${src}">`}</div>`).join('')}</div>`; }
-            } else if (post.postType === 'quiz' && post.quizData) { let optionsHtml = post.quizData.options.map((opt, index) => `<button class="quiz-option" id="quiz-opt-${post.id}-${index}" onclick="checkQuizAnswer(${post.id}, '${opt}')">${opt}</button>`).join(''); mediaHtml = `<div class="quiz-container"><div class="quiz-question">${post.quizData.question}</div>${optionsHtml}<div class="quiz-result" id="quiz-result-${post.id}"></div></div>`; } 
-            else if (post.postType === 'poll' && post.pollData) { let totalVotes = Object.values(post.pollData.votes).reduce((a, b) => a + b, 0); let optionsHtml = post.pollData.options.map((opt) => { let votes = post.pollData.votes[opt] || 0; let percent = totalVotes === 0 ? 0 : Math.round((votes / totalVotes) * 100); return `<div class="poll-option" onclick="votePoll(${post.id}, '${opt}')"><div class="poll-option-text"><span>${opt}</span><span>${percent}% (${votes})</span></div><div class="poll-bar-bg"><div class="poll-bar-fill" style="width: ${percent}%;"></div></div></div>`; }).join(''); mediaHtml = `<div class="poll-container"><div class="poll-question" style="font-weight:bold; margin-bottom:10px;">${post.pollData.question}</div>${optionsHtml}</div>`; } 
-            else { mediaHtml = `<div class="post-media-single" onclick="viewPost(${post.id})" style="height:150px; color:#666;">📹 Media Preview</div>`; }
-
-            let commentsHtml = post.comments.map(c => `<div class="comment-item"><strong>@${c.user}</strong> ${c.text}</div>`).join('');
-            const avatarStyle = post.userAvatar ? `background-image: url(${post.userAvatar}); background-size: cover; color: transparent;` : '';
-
-            return `<div class="post-card"><div class="post-header"><div class="post-avatar" style="${avatarStyle}">${post.username[0]}</div><div class="post-user-info"><strong>@${post.username} ${post.isVerified ? '<span class="verified-badge">✔️</span>' : ''}</strong><span>${post.category === 'fun' ? '🎈 Fun Zone' : 'Just now'}</span></div><button class="follow-btn ${post.following ? 'following' : ''}" onclick="toggleFollow(${post.id})">${post.following ? 'Following' : 'Follow'}</button></div>${mediaHtml}<div class="post-actions"><button class="action-btn ${post.likedByMe ? 'liked' : ''}" onclick="toggleLike(${post.id})">${post.likedByMe ? '❤️' : '🤍'} <span class="action-count">${post.likes}</span></button><button class="action-btn" onclick="document.getElementById('comment-input-${post.id}').focus()">💬 <span class="action-count">${post.comments.length}</span></button><button class="action-btn ${post.favoritedByMe ? 'favorited' : ''}" onclick="toggleFavorite(${post.id})">${post.favoritedByMe ? '⭐' : '☆'}</button>${!isDetailView ? `<button class="action-btn" onclick="viewPost(${post.id})">👁️</button>` : ''}</div><div class="post-info" onclick="viewPost(${post.id})"><h4>${post.title}</h4><p>${post.desc}</p></div><div class="comments-section"><div>${commentsHtml}</div><div class="comment-input-area"><input type="text" class="comment-input" id="comment-input-${post.id}" placeholder="Add a comment..."><button class="comment-send" onclick="addComment(${post.id})">Post</button></div></div></div>`;
-        }
-
-        function votePoll(postId, option) { const post = postFeed.find(p => p.id === postId); if (post && post.pollData) { if (!post.pollData.votedBy) post.pollData.votedBy = []; if (post.pollData.votedBy.includes(currentUser.username)) { alert("You have already voted!"); return; } post.pollData.votes[option] = (post.pollData.votes[option] || 0) + 1; post.pollData.votedBy.push(currentUser.username); DB.savePosts(postFeed); refreshCurrentView(); } }
-        function checkQuizAnswer(postId, selectedOption) { const post = postFeed.find(p => p.id === postId); if (!post || !post.quizData) return; const resultDiv = document.getElementById(`quiz-result-${postId}`); post.quizData.options.forEach((opt, i) => { const btn = document.getElementById(`quiz-opt-${postId}-${i}`); if(btn) { btn.classList.remove('correct','wrong'); btn.disabled = false; } }); if (selectedOption === post.quizData.answer) { resultDiv.innerText = "🎉 Correct!"; resultDiv.style.color = "var(--success)"; document.getElementById(`quiz-opt-${postId}-${post.quizData.options.indexOf(selectedOption)}`).classList.add('correct'); } else { resultDiv.innerText = "❌ Oops! Try again."; resultDiv.style.color = "var(--danger)"; document.getElementById(`quiz-opt-${postId}-${post.quizData.options.indexOf(selectedOption)}`).classList.add('wrong'); } }
-        function toggleLike(id) { const p = postFeed.find(x=>x.id===id); if(p){p.likedByMe=!p.likedByMe;p.likes+=p.likedByMe?1:-1;DB.savePosts(postFeed);refreshCurrentView();} }
-        function toggleFavorite(id) { const p = postFeed.find(x=>x.id===id); if(p){p.favoritedByMe=!p.favoritedByMe;DB.savePosts(postFeed);refreshCurrentView();} }
-        function toggleFollow(id) { const p = postFeed.find(x=>x.id===id); if(p){p.following=!p.following;DB.savePosts(postFeed);refreshCurrentView();} }
-        function addComment(id) { const i = document.getElementById(`comment-input-${id}`); if(i&&i.value.trim()){const p=postFeed.find(x=>x.id===id);if(p){p.comments.push({user:currentUser.username,text:i.value.trim()});DB.savePosts(postFeed);refreshCurrentView();}} }
-
-        function viewPost(postId) { const post = getUniquePosts(postFeed).find(p => p.id === postId); if (!post) return; document.getElementById('view-post').innerHTML = `<div style="display:flex; align-items:center; margin-bottom:15px;"><button class="back-btn" style="display:block;" onclick="goBack()">←</button><h3>Post Details</h3></div>${generatePostCardHTML(post, true)}`; switchTab('post'); }
-
-        // --- 8. CHAT, GROUPS & NEW DM FEATURE ---
-        function renderChatView() {
-            if (currentGroup) return renderActiveGroupChat();
-            if (currentDMUser) return renderActiveDM();
-
-            let groupsHtml = ''; const groups = DB.getGroups();
-            groups.forEach(g => { if (g.owner === 'System') { if (!g.members.includes(currentUser.username)) g.members.push(currentUser.username); if (!g.admins.includes(currentUser.username)) g.admins.push(currentUser.username); } });
-            DB.saveGroups(groups);
-            groups.forEach(g => { groupsHtml += `<div class="list-item" onclick="openGroupChat(${g.id})"><div class="list-avatar" style="background: ${g.name.includes('Business') ? '#f39c12' : '#3498db'}; color: white; font-size: 20px;">${g.name.includes('Business') ? '💼' : '🎓'}</div><div class="list-details"><div class="list-title">${g.name}</div><div class="list-subtitle">${g.messages.length} messages • ${g.members.length} members</div></div></div>`; });
-
-            // NEW: Load DM LIST
-            const dms = DB.getDMs();
-            let dmHtml = '';
-            let hasDMs = false;
-            for (const [chatId, chatData] of Object.entries(dms)) {
-                if (chatData.participants.includes(currentUser.username)) {
-                    hasDMs = true;
-                    const otherUser = chatData.participants.find(u => u !== currentUser.username);
-                    const lastMsg = chatData.messages.length > 0 ? chatData.messages[chatData.messages.length - 1].text || '[Image]' : 'No messages yet';
-                    dmHtml += `<div class="list-item" onclick="openDM('${otherUser}')"><div class="list-avatar">${otherUser[0]}</div><div class="list-details"><div class="list-title">@${otherUser}</div><div class="list-subtitle">${lastMsg}</div></div><div style="font-size:11px; color:var(--text-muted);">${chatData.messages.length > 0 ? 'Just now' : ''}</div></div>`;
+            document.getElementById('view-home').innerHTML = `<div style="text-align:center; color:var(--text-muted); padding:20px;">Loading Feed...</div>`;
+            
+            if (unsubscribeFeed) unsubscribeFeed();
+            
+            unsubscribeFeed = db.collection('posts').orderBy('timestamp', 'desc').onSnapshot(snapshot => {
+                let html = '';
+                if (snapshot.empty) {
+                    html = `<div style="text-align:center; padding:40px 20px; color:var(--text-muted);">No posts yet. Click the + button to post something!</div>`;
+                } else {
+                    snapshot.forEach(doc => {
+                        const post = doc.data();
+                        html += `
+                            <div class="post-card">
+                                <div class="post-header">
+                                    <div class="post-avatar">${post.username[0]}</div>
+                                    <div class="post-user-info">
+                                        <strong>@${post.username}</strong>
+                                        <span style="font-size:12px; color:var(--text-muted);">Just now</span>
+                                    </div>
+                                </div>
+                                ${post.imageUrl ? `<div class="post-media-single"><img src="${post.imageUrl}" alt="Post Image"></div>` : ''}
+                                <div class="post-actions">
+                                    <button class="action-btn">🤍 <span style="font-size:14px; font-weight:bold;">0</span></button>
+                                    <button class="action-btn">💬 <span style="font-size:14px; font-weight:bold;">0</span></button>
+                                </div>
+                                <div class="post-info">
+                                    <h4>${post.title}</h4>
+                                    <p>${post.desc}</p>
+                                </div>
+                            </div>`;
+                    });
                 }
-            }
+                document.getElementById('view-home').innerHTML = html;
+            });
+        }
 
-            document.getElementById('view-chat').innerHTML = `
-                <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:15px;">
-                    <h3>Messages</h3>
-                    <div style="display:flex; gap:5px;">
-                        <button onclick="openStartDMModal()" style="background:var(--bg-card); border:1px solid var(--accent); color:var(--accent); padding:6px 12px; border-radius:15px; font-size:12px; font-weight:bold; cursor:pointer;">✉️ New DM</button>
-                        <button onclick="openCreateGroupModal()" style="background:var(--accent); color:white; border:none; padding:6px 12px; border-radius:15px; font-size:12px; font-weight:bold; cursor:pointer;">+ New Group</button>
+        // --- CREATE POST WITH IMAGE UPLOAD ---
+        function openAddModal() {
+            const modal = document.createElement('div'); modal.className = 'modal-overlay open'; modal.id = 'add-modal';
+            modal.innerHTML = `
+                <div class="modal-content">
+                    <h3>Create a Post</h3>
+                    <input type="text" id="post-title" placeholder="Title" required>
+                    <textarea id="post-desc" placeholder="Description"></textarea>
+                    <div class="form-group" style="text-align:left;">
+                        <input type="file" id="post-file" accept="image/*" style="padding:10px; font-size:12px;">
                     </div>
-                </div>
-                <h4 style="margin-bottom:10px; color:var(--text-muted); font-size:14px;">Direct Messages</h4>
-                ${hasDMs ? dmHtml : '<div style="color:var(--text-muted); font-size:13px; margin-bottom:15px;">No direct messages yet. Click "+ New DM" to start!</div>'}
-                <h4 style="margin-bottom:10px; margin-top:20px; color:var(--text-muted); font-size:14px;">Group Chats</h4>
-                ${groupsHtml || '<div style="color:var(--text-muted); font-size:13px; margin-bottom:15px;">No groups yet.</div>'}
-            `;
-        }
-
-        // --- NEW: OPEN DM AND CHAT VIEW ---
-        function openStartDMModal() {
-            const users = DB.getUsers();
-            let userList = '';
-            let hasUsers = false;
-            for (const [username, userData] of Object.entries(users)) {
-                if (username !== currentUser.username) {
-                    hasUsers = true;
-                    userList += `<div class="list-item" onclick="openDM('${username}'); document.getElementById('start-dm-modal').remove();"><div class="list-avatar">${username[0]}</div><div class="list-details"><div class="list-title">${userData.fullname}</div><div class="list-subtitle">@${username}</div></div></div>`;
-                }
-            }
-            const modal = document.createElement('div'); modal.className = 'modal-overlay open'; modal.id = 'start-dm-modal';
-            modal.innerHTML = `<div class="modal-content"><h3>Start a New DM</h3>${hasUsers ? userList : '<div style="text-align:center; color:var(--text-muted);">No other users registered yet.</div>'}<div class="modal-btns" style="margin-top:15px;"><button class="btn-cancel" onclick="document.getElementById('start-dm-modal').remove()">Close</button></div></div>`;
+                    <div class="modal-btns">
+                        <button class="btn-cancel" onclick="document.getElementById('add-modal').remove()">Cancel</button>
+                        <button class="btn-post" id="submit-post-btn" onclick="submitPost()">Post</button>
+                    </div>
+                </div>`;
             document.body.appendChild(modal);
         }
 
-        function openDM(username) {
-            currentDMUser = username;
+        async function submitPost() {
+            const title = document.getElementById('post-title').value;
+            const desc = document.getElementById('post-desc').value;
+            const fileInput = document.getElementById('post-file');
+            const btn = document.getElementById('submit-post-btn');
+
+            if (!title) { alert("Enter a title."); return; }
+            
+            btn.disabled = true; btn.innerText = 'Uploading...';
+            let imageUrl = null;
+
+            try {
+                if (fileInput.files.length > 0) {
+                    const file = fileInput.files[0];
+                    const storageRef = storage.ref(`posts/${Date.now()}_${file.name}`);
+                    const snapshot = await storageRef.put(file);
+                    imageUrl = await snapshot.ref.getDownloadURL(); 
+                }
+
+                await db.collection('posts').add({
+                    username: currentUser.username,
+                    title: title,
+                    desc: desc,
+                    imageUrl: imageUrl,
+                    timestamp: firebase.firestore.FieldValue.serverTimestamp()
+                });
+
+                document.getElementById('add-modal').remove();
+                switchTab('home'); 
+            } catch (error) {
+                console.error(error);
+                alert("Error creating post: " + error.message);
+                btn.disabled = false; btn.innerText = 'Post';
+            }
+        }
+
+        // --- REAL-TIME DMs & USER SEARCH ---
+        function renderChatView() {
+            if (currentDMUser) return renderActiveDM();
+            
+            document.getElementById('view-chat').innerHTML = `
+                <h3 style="margin-bottom:15px;">Messages</h3>
+                <input type="text" class="search-bar" id="dm-search" placeholder="Search users by name or @username..." oninput="filterUsers(this.value)">
+                <div id="chat-list-container">Loading users...</div>
+            `;
+            
+            if (unsubscribeUsers) unsubscribeUsers();
+
+            // REAL-TIME LISTENER: Automatically fetches new users as they sign up
+            unsubscribeUsers = db.collection('users').onSnapshot(snapshot => {
+                allUsersList = [];
+                snapshot.forEach(doc => {
+                    if (doc.id !== currentUser.uid) {
+                        allUsersList.push({ uid: doc.id, ...doc.data() });
+                    }
+                });
+                filterUsers(''); // Render initially
+            });
+        }
+
+        // NEW: Search functionality for the Chat list
+        function filterUsers(query) {
+            const container = document.getElementById('chat-list-container');
+            const lowerQuery = query.toLowerCase();
+            let html = `<h4 style="margin-bottom:10px; color:var(--text-muted); font-size:14px;">All Users (${allUsersList.length})</h4>`;
+            let found = false;
+
+            allUsersList.forEach(user => {
+                const matchName = user.fullname.toLowerCase().includes(lowerQuery);
+                const matchUsername = user.username.toLowerCase().includes(lowerQuery);
+                
+                if (matchName || matchUsername) {
+                    found = true;
+                    html += `
+                        <div class="list-item" onclick="openDM('${user.uid}', '${user.username}')">
+                            <div class="list-avatar">${user.username[0]}</div>
+                            <div class="list-details">
+                                <div class="list-title">@${user.username}</div>
+                                <div class="list-subtitle">${user.fullname}</div>
+                            </div>
+                        </div>`;
+                }
+            });
+
+            if (!found) {
+                html = `<div style="text-align:center; color:var(--text-muted); padding:20px;">No users found matching "${query}"</div>`;
+            }
+            container.innerHTML = html;
+        }
+
+        function openDM(uid, username) {
+            currentDMUser = { uid: uid, username: username };
+            historyStack.push('chat');
             renderActiveDM();
         }
 
         function renderActiveDM() {
-            const chatId = [currentUser.username, currentDMUser].sort().join('_');
-            const dms = DB.getDMs();
-            const chat = dms[chatId] || { participants: [currentUser.username, currentDMUser], messages: [] };
-
-            let messagesHtml = chat.messages.map((msg) => {
-                if (msg.image) {
-                    return `<div class="message ${msg.sender === currentUser.username ? 'my' : 'other'}"><div style="font-size:10px; color:${msg.sender === currentUser.username ? '#ddd' : 'var(--accent)'}; margin-bottom:3px; font-weight:bold;">@${msg.sender}</div><img src="${msg.image}" alt="Upload"></div>`;
-                }
-                return `<div class="message ${msg.sender === currentUser.username ? 'my' : 'other'}"><div style="font-size:10px; color:${msg.sender === currentUser.username ? '#ddd' : 'var(--accent)'}; margin-bottom:3px; font-weight:bold;">@${msg.sender}</div>${msg.text}</div>`;
-            }).join('');
+            document.getElementById('header-title-text').innerText = `@${currentDMUser.username}`;
+            document.getElementById('global-back-btn').style.display = 'block';
+            const chatId = [currentUser.uid, currentDMUser.uid].sort().join('_');
 
             document.getElementById('view-chat').innerHTML = `
-                <div style="display:flex; align-items:center; margin-bottom:15px; gap:10px;">
-                    <button class="back-btn" style="display:block;" onclick="goBack()">←</button>
-                    <div style="flex:1;"><h3>@${currentDMUser}</h3><div style="font-size:11px; color:var(--text-muted);">Private Conversation</div></div>
-                </div>
                 <div class="chat-container">
-                    <div class="chat-list" id="dm-chat-list">${messagesHtml || '<div style="text-align:center; color:var(--text-muted); padding:20px;">Say hello to @'+currentDMUser+'!</div>'}</div>
+                    <div class="chat-list" id="dm-chat-list"><div style="text-align:center; padding:20px;">Loading...</div></div>
                     <div class="chat-input-area">
-                        <input type="file" id="dm-file-input" accept="image/*" class="hidden-input" onchange="handleDMImageUpload(event)">
-                        <button class="icon-btn" onclick="document.getElementById('dm-file-input').click()">🖼️</button>
                         <input type="text" class="chat-input" id="dm-chat-input" placeholder="Type a message..." onkeypress="handleDMKeyPress(event)">
-                        <button class="send-btn" onclick="sendDMMessage()">➤</button>
+                        <button class="send-btn" onclick="sendDMMessage('${chatId}')">➤</button>
                     </div>
                 </div>`;
-            const list = document.getElementById('dm-chat-list'); if (list) list.scrollTop = list.scrollHeight;
+
+            if (unsubscribeMessages) unsubscribeMessages();
+            unsubscribeMessages = db.collection('dms').doc(chatId).collection('messages')
+                .orderBy('timestamp', 'asc')
+                .onSnapshot(snapshot => {
+                    let messagesHtml = '';
+                    if (snapshot.empty) messagesHtml = `<div style="text-align:center; color:var(--text-muted); padding:20px;">Say hello!</div>`;
+                    else {
+                        snapshot.forEach(doc => {
+                            const msg = doc.data();
+                            const isMe = msg.senderId === currentUser.uid;
+                            messagesHtml += `<div class="message ${isMe ? 'my' : 'other'}"><div style="font-size:10px; margin-bottom:3px;">@${msg.senderUsername}</div>${msg.text}</div>`;
+                        });
+                    }
+                    const list = document.getElementById('dm-chat-list');
+                    list.innerHTML = messagesHtml;
+                    list.scrollTop = list.scrollHeight; 
+                });
         }
 
-        function sendDMMessage() {
+        async function sendDMMessage(chatId) {
             const input = document.getElementById('dm-chat-input');
-            if (input.value.trim()) {
-                const chatId = [currentUser.username, currentDMUser].sort().join('_');
-                const dms = DB.getDMs();
-                if (!dms[chatId]) dms[chatId] = { participants: [currentUser.username, currentDMUser], messages: [] };
-                dms[chatId].messages.push({ sender: currentUser.username, text: input.value.trim(), timestamp: Date.now() });
-                DB.saveDMs(dms);
-                input.value = '';
-                renderActiveDM();
-            }
+            if (!input.value.trim()) return;
+            const text = input.value.trim();
+            input.value = '';
+            await db.collection('dms').doc(chatId).collection('messages').add({
+                text: text, senderId: currentUser.uid, senderUsername: currentUser.username,
+                timestamp: firebase.firestore.FieldValue.serverTimestamp()
+            });
         }
 
-        function handleDMKeyPress(event) { if (event.key === 'Enter') sendDMMessage(); }
-
-        function handleDMImageUpload(event) {
-            const file = event.target.files[0];
-            if (file) {
-                if (file.size > 1.5 * 1024 * 1024) { alert("Image is too large! Please keep it under 1.5MB for this demo."); return; }
-                const reader = new FileReader();
-                reader.onloadend = () => {
-                    const chatId = [currentUser.username, currentDMUser].sort().join('_');
-                    const dms = DB.getDMs();
-                    if (!dms[chatId]) dms[chatId] = { participants: [currentUser.username, currentDMUser], messages: [] };
-                    dms[chatId].messages.push({ sender: currentUser.username, image: reader.result, timestamp: Date.now() });
-                    DB.saveDMs(dms);
-                    renderActiveDM();
-                };
-                reader.readAsDataURL(file);
-            }
+        function handleDMKeyPress(event) {
+            if (event.key === 'Enter') sendDMMessage([currentUser.uid, currentDMUser.uid].sort().join('_'));
         }
 
-        // --- EXISTING GROUP CHAT LOGIC ---
-        function openGroupChat(groupId) { currentGroup = DB.getGroups().find(g => g.id === groupId); if (currentGroup.owner === 'System' && !currentGroup.members.includes(currentUser.username)) { currentGroup.members.push(currentUser.username); DB.saveGroups(DB.getGroups()); } currentGroupTab = 'chat'; renderActiveGroupChat(); }
-        function renderActiveGroupChat() {
-            if (!currentGroup.admins.includes(currentUser.username)) { currentGroup.admins.push(currentUser.username); DB.saveGroups(DB.getGroups()); }
-            let contentHtml = '';
-            if (currentGroupTab === 'chat') {
-                let messagesHtml = currentGroup.messages.map((msg) => `<div class="message ${msg.sender === currentUser.username ? 'my' : 'other'}"><div style="font-size:10px; color:${msg.sender === currentUser.username ? '#ddd' : 'var(--accent)'}; margin-bottom:3px; font-weight:bold;">@${msg.sender}</div>${msg.text}</div>`).join('');
-                contentHtml = `<div class="chat-list" id="group-chat-list">${messagesHtml}</div><div class="chat-input-area"><input type="text" class="chat-input" id="group-chat-input" placeholder="Type a message..." onkeypress="handleGroupChatKeyPress(event)"><button class="send-btn" onclick="sendGroupMessage()">➤</button></div>`;
-            } else if (currentGroupTab === 'files') {
-                let filesHtml = (currentGroup.files || []).map(f => `<div class="file-item"><div class="file-icon">📄</div><div class="file-info"><div class="file-name">${f.name}</div><div style="font-size:11px; color:var(--text-muted);">Uploaded by @${f.uploader}</div></div><a href="${f.data}" download="${f.name}" class="download-btn">Download</a></div>`).join('');
-                contentHtml = `<div style="padding:10px; flex:1; overflow-y:auto;">${filesHtml || '<div style="text-align:center; color:var(--text-muted); padding:20px;">No files uploaded yet.</div>'}</div><div class="chat-input-area"><input type="file" id="group-file-input" class="hidden-input" onchange="uploadGroupFile(event)"><button class="send-btn" style="width:100%;" onclick="document.getElementById('group-file-input').click()">📁 Upload Note/File</button></div>`;
-            } else if (currentGroupTab === 'qna') {
-                let qnaHtml = (currentGroup.qna || []).map(q => `<div class="qna-item"><div class="qna-question">❓ ${q.question}</div>${q.answers.map(a => `<div class="qna-answer">💡 ${a.text} <span style="font-size:10px; color:var(--accent);">— @${a.user}</span></div>`).join('')}<div style="display:flex; gap:10px; margin-top:10px; align-items:center;"><button class="upvote-btn ${q.upvotes.includes(currentUser.username) ? 'upvoted' : ''}" onclick="upvoteQna(${q.id})">▲ Upvote (${q.upvotes.length})</button><input type="text" class="comment-input" id="qna-answer-${q.id}" placeholder="Write an answer..." style="flex:1;"><button class="comment-send" onclick="submitQnaAnswer(${q.id})">Answer</button></div></div>`).join('');
-                contentHtml = `<div style="padding:10px; flex:1; overflow-y:auto;">${qnaHtml || '<div style="text-align:center; color:var(--text-muted); padding:20px;">No questions yet.</div>'}</div><div class="chat-input-area"><input type="text" class="chat-input" id="qna-question-input" placeholder="Ask a question..."><button class="send-btn" onclick="submitQnaQuestion()">Ask</button></div>`;
-            }
-            document.getElementById('view-chat').innerHTML = `<div style="display:flex; align-items:center; margin-bottom:15px; gap:10px; justify-content: space-between;"><div style="display:flex; align-items:center; gap:10px;"><button class="back-btn" style="display:block;" onclick="goBack()">←</button><div><h3>${currentGroup.name}</h3><div style="font-size:11px; color:var(--text-muted);">${currentGroup.description}</div></div></div><div style="display:flex; gap:5px;"><button onclick="openEditGroupModal()" style="background:none; border:1px solid var(--accent); color:var(--accent); padding:5px 10px; border-radius:15px; font-size:12px; cursor:pointer;">⚙️</button><button onclick="openMembersModal()" style="background:none; border:1px solid var(--accent); color:var(--accent); padding:5px 10px; border-radius:15px; font-size:12px; cursor:pointer;">👥</button></div></div><div class="chat-tabs"><div class="chat-tab ${currentGroupTab === 'chat' ? 'active' : ''}" onclick="switchGroupTab('chat')">💬 Chat</div><div class="chat-tab ${currentGroupTab === 'files' ? 'active' : ''}" onclick="switchGroupTab('files')">📁 Files</div><div class="chat-tab ${currentGroupTab === 'qna' ? 'active' : ''}" onclick="switchGroupTab('qna')">❓ Q&A</div></div><div class="chat-container">${contentHtml}</div>`;
-        }
-
-        function switchGroupTab(tab) { currentGroupTab = tab; renderActiveGroupChat(); }
-        function sendGroupMessage() { const i = document.getElementById('group-chat-input'); if (i.value.trim()) { currentGroup.messages.push({ sender: currentUser.username, text: i.value.trim() }); DB.saveGroups(DB.getGroups()); i.value = ''; renderActiveGroupChat(); } }
-        function handleGroupChatKeyPress(e) { if (e.key === 'Enter') sendGroupMessage(); }
-        function uploadGroupFile(event) { const file = event.target.files[0]; if (file) { if (file.size > 2 * 1024 * 1024) { alert("File is too large! Max 2MB."); return; } const reader = new FileReader(); reader.onloadend = () => { if (!currentGroup.files) currentGroup.files = []; currentGroup.files.unshift({ name: file.name, data: reader.result, uploader: currentUser.username }); DB.saveGroups(DB.getGroups()); renderActiveGroupChat(); }; reader.readAsDataURL(file); } }
-        function submitQnaQuestion() { const i = document.getElementById('qna-question-input'); if (i.value.trim()) { if (!currentGroup.qna) currentGroup.qna = []; currentGroup.qna.unshift({ id: Date.now(), question: i.value.trim(), user: currentUser.username, answers: [], upvotes: [] }); DB.saveGroups(DB.getGroups()); i.value = ''; renderActiveGroupChat(); } }
-        function submitQnaAnswer(qnaId) { const i = document.getElementById(`qna-answer-${qnaId}`); if (i.value.trim()) { const q = currentGroup.qna.find(x => x.id === qnaId); if (q) { q.answers.push({ user: currentUser.username, text: i.value.trim() }); DB.saveGroups(DB.getGroups()); renderActiveGroupChat(); } } }
-        function upvoteQna(qnaId) { const q = currentGroup.qna.find(x => x.id === qnaId); if (q) { if (q.upvotes.includes(currentUser.username)) { q.upvotes = q.upvotes.filter(u => u !== currentUser.username); } else { q.upvotes.push(currentUser.username); } DB.saveGroups(DB.getGroups()); renderActiveGroupChat(); } }
-
-        function openMembersModal() { const membersList = currentGroup.members.map(m => `<li>@${m} ${m === currentUser.username ? '(You)' : `<button class="remove-btn" onclick="removeMember('${m}')">Remove</button>`}</li>`).join(''); const modal = document.createElement('div'); modal.className = 'modal-overlay open'; modal.id = 'members-modal'; modal.innerHTML = `<div class="modal-content"><h3>Members</h3><ul style="list-style:none;text-align:left;">${membersList}</ul><div class="modal-btns" style="margin-top:15px;"><button class="btn-post" onclick="document.getElementById('members-modal').remove()">Close</button></div></div>`; document.body.appendChild(modal); }
-        function removeMember(name) { if(confirm(`Remove @${name}?`)) { currentGroup.members = currentGroup.members.filter(m => m !== name); DB.saveGroups(DB.getGroups()); document.getElementById('members-modal').remove(); renderActiveGroupChat(); } }
-        function openEditGroupModal() { const modal = document.createElement('div'); modal.className = 'modal-overlay open'; modal.id = 'edit-group-modal'; modal.innerHTML = `<div class="modal-content"><h3>Edit Group</h3><input type="text" id="edit-g-name" value="${currentGroup.name}"><textarea id="edit-g-desc">${currentGroup.description}</textarea><div class="modal-btns"><button class="btn-cancel" onclick="document.getElementById('edit-group-modal').remove()">Cancel</button><button class="btn-post" onclick="submitEditGroup()">Save</button></div></div>`; document.body.appendChild(modal); }
-        function submitEditGroup() { currentGroup.name = document.getElementById('edit-g-name').value; currentGroup.description = document.getElementById('edit-g-desc').value; DB.saveGroups(DB.getGroups()); document.getElementById('edit-group-modal').remove(); renderActiveGroupChat(); }
-        function openCreateGroupModal() { const modal = document.createElement('div'); modal.className = 'modal-overlay open'; modal.id = 'create-group-modal'; modal.innerHTML = `<div class="modal-content"><h3>Create Group</h3><input type="text" id="new-g-name" placeholder="Group Name"><textarea id="new-g-desc" placeholder="Description"></textarea><select id="new-g-type"><option value="business">💼 Business</option><option value="student">🎓 Student</option></select><div class="modal-btns"><button class="btn-cancel" onclick="document.getElementById('create-group-modal').remove()">Cancel</button><button class="btn-post" onclick="submitNewGroup()">Create</button></div></div>`; document.body.appendChild(modal); }
-        function submitNewGroup() { const n = document.getElementById('new-g-name').value; if(!n) return; const newG = { id: Date.now(), name: n, description: document.getElementById('new-g-desc').value, type: document.getElementById('new-g-type').value, owner: currentUser.username, admins: [currentUser.username], members: [currentUser.username], messages: [], files: [], qna: [] }; const groups = DB.getGroups(); groups.push(newG); DB.saveGroups(groups); document.getElementById('create-group-modal').remove(); renderChatView(); }
-
-        // --- 9. NOTIFICATIONS & PROFILE ---
-        function renderNotifsView() { let html = `<h3 style="margin-bottom:15px;">Notifications</h3>`; html += `<div style="text-align:center; color:var(--text-muted); padding:20px;">No new notifications.</div>`; document.getElementById('view-notifs').innerHTML = html; }
+        // --- PROFILE ---
         function renderProfileView() {
-            document.getElementById('view-profile').innerHTML = `<div class="profile-card"><input type="file" id="profile-pic-input" accept="image/*" class="hidden-input" onchange="handleProfilePicUpload(event)"><div style="position:relative; display:inline-block; margin-bottom:10px;"><img src="${currentUser.avatar}" class="profile-avatar" id="profile-avatar-img"><div style="position:absolute; bottom:0; right:0; background:var(--accent); color:white; width:30px; height:30px; border-radius:50%; display:flex; justify-content:center; align-items:center; cursor:pointer; border:2px solid var(--bg-card);" onclick="document.getElementById('profile-pic-input').click()">📷</div></div><div class="profile-name">${currentUser.fullname} ${currentUser.isVerified ? '<span class="verified-badge">✔️</span>' : ''}</div><div class="profile-bio">@${currentUser.username} • ${currentUser.bio}</div><div class="profile-details">📍 ${currentUser.address || 'No address'}<br>🔥 Streak: ${currentUser.streak || 1} Days</div><div class="stats-row"><div class="stat-item"><span class="stat-number">${currentUser.followers}</span><span class="stat-label">Followers</span></div><div class="stat-item"><span class="stat-number">${currentUser.following || 0}</span><span class="stat-label">Following</span></div><div class="stat-item"><span class="stat-number">${getUniquePosts(postFeed).filter(p => p.username === currentUser.username).length}</span><span class="stat-label">Posts</span></div></div><button onclick="switchTab('settings')" style="margin-top:20px; width:100%; padding:12px; background:var(--accent); color:white; border:none; border-radius:8px; font-weight:bold; cursor:pointer;">Go to Settings</button></div><div class="profile-tabs"><div class="profile-tab ${currentProfileTab === 'my-posts' ? 'active' : ''}" onclick="switchProfileTab('my-posts')">My Posts</div><div class="profile-tab ${currentProfileTab === 'liked' ? 'active' : ''}" onclick="switchProfileTab('liked')">Liked</div><div class="profile-tab ${currentProfileTab === 'favorites' ? 'active' : ''}" onclick="switchProfileTab('favorites')">Favorites</div></div><div id="profile-feed-container"></div>`;
-            renderProfileFeed();
+            document.getElementById('view-profile').innerHTML = `
+                <div class="profile-card">
+                    <img src="${currentUser.avatar}" class="profile-avatar">
+                    <div class="profile-name">${currentUser.fullname}</div>
+                    <div class="profile-bio">@${currentUser.username} • ${currentUser.bio}</div>
+                </div>
+            `;
         }
-        function switchProfileTab(tab) { currentProfileTab = tab; document.querySelectorAll('.profile-tab').forEach(el => el.classList.remove('active')); event.target.classList.add('active'); renderProfileFeed(); }
-        function renderProfileFeed() { const container = document.getElementById('profile-feed-container'); const uniqueFeed = getUniquePosts(postFeed); let filteredPosts = []; if (currentProfileTab === 'my-posts') filteredPosts = uniqueFeed.filter(p => p.username === currentUser.username); else if (currentProfileTab === 'liked') filteredPosts = uniqueFeed.filter(p => p.likedByMe); else if (currentProfileTab === 'favorites') filteredPosts = uniqueFeed.filter(p => p.favoritedByMe); if (filteredPosts.length === 0) { container.innerHTML = `<div style="text-align:center; color:var(--text-muted); padding:20px;">No posts to show here yet.</div>`; return; } let html = ''; filteredPosts.forEach(post => { html += generatePostCardHTML(post); }); container.innerHTML = html; }
-        function handleProfilePicUpload(event) { const file = event.target.files[0]; if (file) { const reader = new FileReader(); reader.onloadend = () => { currentUser.avatar = reader.result; DB.saveSession(currentUser); const users = DB.getUsers(); users[currentUser.username] = currentUser; DB.saveUsers(users); renderProfileView(); }; reader.readAsDataURL(file); } }
-
-        // --- 10. SETTINGS & DASHBOARD ---
-        function renderSettingsView() {
-            document.getElementById('view-settings').innerHTML = `<h3 style="margin-bottom:15px;">App Settings</h3><div class="settings-group"><span>🌙 Dark Theme</span><label class="switch"><input type="checkbox" id="theme-toggle" ${isLightMode ? '' : 'checked'} onchange="toggleTheme()"><span class="slider"></span></label></div><div class="settings-group"><span>👤 Profile Settings</span><button onclick="switchTab('profile-settings')" style="background:none; border:none; color:var(--accent); cursor:pointer; font-weight:bold;">Edit</button></div><div class="settings-group" style="flex-direction: column; align-items: flex-start;"><div class="settings-title" style="color: var(--danger);">⚠️ Data Management</div><button onclick="forceReset()" style="width:100%; padding:10px; background:var(--danger); color:white; border:none; border-radius:8px; font-weight:bold; cursor:pointer;">Force Database Reset</button></div>`;
-        }
-        function forceReset() { if(confirm("Reset chats, DMs, and shop items to default?")) { localStorage.removeItem('circlo_groups_table'); localStorage.removeItem('circlo_dms_table'); localStorage.removeItem('circlo_products_table'); location.reload(); } }
-        function toggleTheme() { isLightMode = !isLightMode; if (isLightMode) document.body.classList.add('light-mode'); else document.body.classList.remove('light-mode'); localStorage.setItem('circlo_theme', JSON.stringify(isLightMode)); }
-
-        function renderProfileSettingsView() {
-            const colors = ['#5D9CEC', '#2E8B57', '#9B59B6', '#E74C3C', '#F39C12', '#1ABC9C'];
-            const colorDots = colors.map(c => `<div class="color-dot ${currentUser.theme === c ? 'selected' : ''}" style="background: ${c};" onclick="changeTheme('${c}')"></div>`).join('');
-            const myPosts = postFeed.filter(p => p.username === currentUser.username); const totalLikes = myPosts.reduce((sum, p) => sum + p.likes, 0); const totalComments = myPosts.reduce((sum, p) => sum + p.comments.length, 0); const totalViews = myPosts.length * 42;
-
-            document.getElementById('view-profile-settings').innerHTML = `<h3 style="margin-bottom:15px;">Profile Settings</h3><div class="settings-group" style="flex-direction: column; align-items: flex-start; gap: 10px;"><div class="settings-title">Change Username</div><div style="display:flex; gap:10px; width:100%;"><input type="text" id="new-username-input" value="${currentUser.username}" style="flex:1; padding:10px; border-radius:8px; border:1px solid var(--border-color); background:var(--bg-body); color:var(--text-main);"><button onclick="changeUsername()" style="padding:10px 15px; background:var(--accent); color:white; border:none; border-radius:8px; font-weight:bold; cursor:pointer;">Save</button></div></div><div class="settings-group" style="flex-direction: column; align-items: flex-start;"><div class="settings-title">🎨 Profile Theme Color</div><div class="color-picker">${colorDots}</div></div><div class="settings-group"><span>🔒 Private Account</span><label class="switch"><input type="checkbox" id="private-toggle" ${currentUser.isPrivate ? 'checked' : ''} onchange="togglePrivateAccount()"><span class="slider"></span></label></div><div class="settings-group" style="flex-direction: column; align-items: flex-start; background: var(--bg-body); border: 1px solid var(--accent);"><div class="settings-title" style="color: var(--accent);">📊 Creator Dashboard</div><div style="display:flex; justify-content:space-between; width:100%; margin-top:10px;"><div style="text-align:center;"><div style="font-size:20px; font-weight:bold; color:var(--accent);">${totalLikes}</div><div style="font-size:11px; color:var(--text-muted);">Likes</div></div><div style="text-align:center;"><div style="font-size:20px; font-weight:bold; color:var(--accent);">${totalComments}</div><div style="font-size:11px; color:var(--text-muted);">Comments</div></div><div style="text-align:center;"><div style="font-size:20px; font-weight:bold; color:var(--accent);">${totalViews}</div><div style="font-size:11px; color:var(--text-muted);">Views</div></div></div></div><div class="settings-group" style="flex-direction: column; align-items: flex-start;"><div class="settings-title">✔️ Verified Badge</div>${currentUser.isVerified ? '<div style="color:var(--success); font-weight:bold;">You are Verified!</div>' : currentUser.verificationStatus === 'Pending' ? '<div style="color:var(--warning); font-weight:bold;">Application Pending...</div>' : `<button onclick="applyForVerification()" style="width:100%; padding:10px; background:#1DA1F2; color:white; border:none; border-radius:8px; font-weight:bold; cursor:pointer;">Apply for Verification</button>`}</div>`;
-        }
-        function applyForVerification() { currentUser.verificationStatus = 'Pending'; DB.saveSession(currentUser); const users = DB.getUsers(); users[currentUser.username] = currentUser; DB.saveUsers(users); alert("Your application for verification has been submitted!"); renderProfileSettingsView(); }
-        function changeTheme(color) { currentUser.theme = color; DB.saveSession(currentUser); const users = DB.getUsers(); users[currentUser.username] = currentUser; DB.saveUsers(users); document.documentElement.style.setProperty('--accent', color); renderProfileSettingsView(); }
-        function changeUsername() { const newU = document.getElementById('new-username-input').value.trim(); if (!newU) return; const users = DB.getUsers(); if (users[newU]) { alert("Username taken."); return; } const oldU = currentUser.username; currentUser.username = newU; delete users[oldU]; users[newU] = currentUser; DB.saveUsers(users); DB.saveSession(currentUser); postFeed.forEach(p => { if (p.username === oldU) p.username = newU; }); DB.savePosts(postFeed); alert("Username updated!"); renderProfileSettingsView(); }
-        function togglePrivateAccount() { currentUser.isPrivate = document.getElementById('private-toggle').checked; const users = DB.getUsers(); users[currentUser.username] = currentUser; DB.saveUsers(users); DB.saveSession(currentUser); }
-
-        // --- 11. ADD POST MODAL ---
-        function openAddModal() {
-            const modal = document.createElement('div'); modal.className = 'modal-overlay open'; modal.id = 'add-video-modal';
-            modal.innerHTML = `<div class="modal-content"><h3>Create a Post</h3><select id="post-category" onchange="togglePostType()"><option value="general">General Feed</option><option value="fun">🎈 Fun Zone</option></select><select id="post-type" onchange="togglePostType()"><option value="standard">Picture / Video / Text</option><option value="quiz">Quiz</option><option value="poll">Poll</option></select><input type="text" id="post-title" placeholder="Title" required><textarea id="post-desc" placeholder="Description (optional)"></textarea><div id="quiz-fields" style="display:none; text-align:left; background:var(--bg-body); padding:10px; border-radius:8px; margin-bottom:15px;"><input type="text" id="quiz-question" placeholder="Question"><input type="text" id="quiz-options" placeholder="Options (comma separated)"><input type="text" id="quiz-answer" placeholder="Correct Answer"></div><div id="poll-fields" style="display:none; text-align:left; background:var(--bg-body); padding:10px; border-radius:8px; margin-bottom:15px;"><input type="text" id="poll-question" placeholder="Poll Question"><input type="text" id="poll-options" placeholder="Options (comma separated)"></div><div class="form-group" style="text-align:left;" id="media-upload-group"><input type="file" id="post-file" accept="image/*,video/*" multiple style="padding:10px; font-size:12px;"></div><div class="modal-btns"><button class="btn-cancel" onclick="closeAddModal()">Cancel</button><button class="btn-post" id="submit-post-btn" onclick="submitPost()">Post</button></div></div>`;
-            document.body.appendChild(modal);
-        }
-        function togglePostType() { const type = document.getElementById('post-type').value; document.getElementById('quiz-fields').style.display = type === 'quiz' ? 'block' : 'none'; document.getElementById('poll-fields').style.display = type === 'poll' ? 'block' : 'none'; document.getElementById('media-upload-group').style.display = type === 'standard' ? 'block' : 'none'; }
-        function closeAddModal() { const m = document.getElementById('add-video-modal'); if (m) m.remove(); }
-        function submitPost() {
-            const title = document.getElementById('post-title').value; if (!title) { alert("Enter title."); return; }
-            const category = document.getElementById('post-category').value; const postType = document.getElementById('post-type').value;
-            const btn = document.getElementById('submit-post-btn'); btn.disabled = true; btn.innerText = 'Posting...';
-            const newPost = { id: Date.now(), username: currentUser.username, userAvatar: currentUser.avatar, isVerified: currentUser.isVerified, title, desc: document.getElementById('post-desc').value, media: [], mediaTypes: [], mediaType: 'media-array', category, postType, likes: 0, likedByMe: false, favoritedByMe: false, following: false, comments: [] };
-            if (postType === 'quiz') { newPost.quizData = { question: document.getElementById('quiz-question').value, options: document.getElementById('quiz-options').value.split(',').map(s=>s.trim()), answer: document.getElementById('quiz-answer').value }; newPost.mediaType = 'none'; postFeed.unshift(newPost); DB.savePosts(postFeed); closeAddModal(); switchTab('fun'); } 
-            else if (postType === 'poll') { newPost.pollData = { question: document.getElementById('poll-question').value, options: document.getElementById('poll-options').value.split(',').map(s=>s.trim()), votes: {}, votedBy: [] }; newPost.mediaType = 'none'; postFeed.unshift(newPost); DB.savePosts(postFeed); closeAddModal(); switchTab('fun'); } 
-            else { const fileInput = document.getElementById('post-file'); if (fileInput.files.length > 0) { const files = Array.from(fileInput.files); let count = 0; let media = []; let types = []; files.forEach(file => { if (file.size > 1.5 * 1024 * 1024) { alert("File is too large! Max 1.5MB for this demo."); btn.disabled = false; btn.innerText = 'Post'; return; } const r = new FileReader(); r.onloadend = () => { media.push(r.result); types.push(file.type.startsWith('video')?'video':'image'); count++; if(count === files.length) { newPost.media = media; newPost.mediaTypes = types; postFeed.unshift(newPost); DB.savePosts(postFeed); closeAddModal(); switchTab(category==='fun'?'fun':'home'); } }; r.readAsDataURL(file); }); } else { newPost.mediaType = 'none'; postFeed.unshift(newPost); DB.savePosts(postFeed); closeAddModal(); switchTab(category==='fun'?'fun':'home'); } }
-        }
-
-        // --- 12. LOGOUT & INIT ---
-        function logout() { DB.clearSession(); currentUser = null; isLoginMode = true; render(); }
-        render();
     </script>
 </body>
 </html>
